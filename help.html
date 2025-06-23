@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <title>Help</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .help-section {
+            background: #fffbe7;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            padding: 24px 32px;
+            margin: 24px auto;
+            max-width: 700px;
+        }
+        .help-section h2 {
+            margin-top: 0;
+            color: #b86bff;
+        }
+        .help-section table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+        }
+        .help-section th, .help-section td {
+            border: 1px solid #e0d7f7;
+            padding: 6px 10px;
+            text-align: left;
+        }
+        .help-section th {
+            background: #f3eaff;
+        }
+        .help-section ul {
+            margin: 0 0 0 20px;
+        }
+        .emoji {
+            font-size: 1.2em;
+            margin-right: 6px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="dices.html">Dices</a>
+        <a href="player-stats.html">Player Stats</a>
+        <a href="help.html">Help</a>
+    </nav>
+    <div class="container">
+
+        <div class="help-section">
+            <h2>🎉 Ada Party - Rules Overview</h2>
+            <p>
+                A board game of pathways, pressure, and power-ups!<br>
+                <strong>Objective:</strong> Be the first player to reach <b>20 Education Points</b> and pass the Final Exam!
+            </p>
+        </div>
+
+        <div class="help-section">
+            <h2>🧑‍🎓 1. Choose Your Pathway (Class)</h2>
+            <table>
+                <tr>
+                    <th>Class</th>
+                    <th>Perk</th>
+                </tr>
+                <tr>
+                    <td>T-Level</td>
+                    <td>Start with +3 Education Points</td>
+                </tr>
+                <tr>
+                    <td>Creative</td>
+                    <td>Get +2 Rerolls for dice or mini-games</td>
+                </tr>
+                <tr>
+                    <td>Pioneer</td>
+                    <td>Use a special dice: X ~ Geo(0.25) (higher risk, higher reward)</td>
+                </tr>
+                <tr>
+                    <td>Innovative</td>
+                    <td>Max Health = 8 instead of 5</td>
+                </tr>
+                <tr>
+                    <td>Standard</td>
+                    <td>No perks, but no weaknesses either</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="help-section">
+            <h2>🎲 2. Basic Stats</h2>
+            <ul>
+                <li><b>Health</b> (Max 5 unless modified)</li>
+                <li><b>Education Points</b></li>
+                <li><b>Rerolls</b> (3 per game unless modified)</li>
+                <li><b>Debuffs &amp; Shortcuts</b> (earned during play)</li>
+            </ul>
+            <p>If Health = 0, skip your next turn to regenerate to 3 Health.</p>
+        </div>
+
+        <div class="help-section">
+            <h2>📦 3. Board Squares</h2>
+            <table>
+                <tr>
+                    <th>Square</th>
+                    <th>Effect</th>
+                </tr>
+                <tr>
+                    <td>Holidays</td>
+                    <td>+5 Health (up to max)</td>
+                </tr>
+                <tr>
+                    <td>Heat Wave</td>
+                    <td>-2 Health</td>
+                </tr>
+                <tr>
+                    <td>Ada Skills Workshop</td>
+                    <td>-1 Health, +1 Education</td>
+                </tr>
+                <tr>
+                    <td>Exam</td>
+                    <td>If you have ≥20 Education, you win! Otherwise, return to start.</td>
+                </tr>
+                <tr>
+                    <td>Public Speaking</td>
+                    <td>-3 Health (-1 if T-Level), +2 Education</td>
+                </tr>
+                <tr>
+                    <td>Creative Project</td>
+                    <td>-3 Health (-1 if Creative), +2 Education</td>
+                </tr>
+                <tr>
+                    <td>Weekend</td>
+                    <td>+1 Health</td>
+                </tr>
+                <tr>
+                    <td>School Day</td>
+                    <td>+1 Education, -1 Health, or skip it and treat as Weekend</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="help-section">
+            <h2>🕹️ 4. Mini-Games</h2>
+            <table>
+                <tr>
+                    <th>Mini-Game</th>
+                    <th>Rules &amp; Rewards</th>
+                </tr>
+                <tr>
+                    <td>Chase the Goose</td>
+                    <td>First to spot goose in an image gets 1 extra turn</td>
+                </tr>
+                <tr>
+                    <td>Industry Project</td>
+                    <td>Quiz based on past projects. Right answer = bonus.</td>
+                </tr>
+                <tr>
+                    <td>Creativity</td>
+                    <td>List X examples in Y seconds. Win = +3 Health, +3 Education</td>
+                </tr>
+                <tr>
+                    <td>Resilience</td>
+                    <td>Staring contest. Winner gets bragging rights (and maybe a bonus?)</td>
+                </tr>
+                <tr>
+                    <td>Collaboration</td>
+                    <td>Spy-finding game (like “Find the Spy”/“Werewolf”)</td>
+                </tr>
+                <tr>
+                    <td>Curiosity</td>
+                    <td>Quiz question. Right answer = +2 Education</td>
+                </tr>
+                <tr>
+                    <td>Rigour</td>
+                    <td>Secretly choose how far back to move (0+). Most moves = +2 Health, +3 Education. No square effects trigger during this move.</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="help-section">
+            <h2>🔁 5. Rerolls</h2>
+            <ul>
+                <li>Each player starts with 3 rerolls per game.</li>
+                <li>Use them to:
+                    <ul>
+                        <li>Reroll dice</li>
+                    </ul>
+                </li>
+                <li>Creative class gets +2 extra rerolls!</li>
+            </ul>
+        </div>
+
+        <div class="help-section">
+            <h2>🏆 6. Winning the Game</h2>
+            <ul>
+                <li>Reach 25 Education Points</li>
+                <li>Land on the Exam Square</li>
+                <li>Pass! If you fail the exam, go back to the start.</li>
+            </ul>
+        </div>
+
+    </div>
+</body>
+</html>

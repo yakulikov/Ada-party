@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dices</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="dices.html">Dices</a>
+        <a href="player-stats.html">Player Stats</a>
+        <a href="help.html">Help</a>
+    </nav>
+    <div class="container">
+        <button id="rollDice1">Roll Standard Dice</button>
+        <button id="rollDice2">Roll Geo(0.25) Dice</button>
+        <div id="dice" class="dice">?</div>
+    </div>
+    <script>
+        function rollStandardDice() {
+            return Math.floor(Math.random() * 6) + 1;
+        }
+
+        function rollGeoDice(p = 0.25) {
+            let x = 1;
+            while (Math.random() > p) {
+                x++;
+            }
+            return x;
+        }
+
+        function animateDice(result) {
+            const diceDiv = document.getElementById('dice');
+            diceDiv.classList.add('rolling');
+            diceDiv.textContent = '?';
+            setTimeout(() => {
+                diceDiv.classList.remove('rolling');
+                diceDiv.textContent = result;
+            }, 500);
+        }
+
+        document.getElementById('rollDice1').onclick = function() {
+            const result = rollStandardDice();
+            animateDice(result);
+        };
+
+        document.getElementById('rollDice2').onclick = function() {
+            const result = rollGeoDice(0.25);
+            animateDice(result);
+        };
+    </script>
+</body>
+</html>
