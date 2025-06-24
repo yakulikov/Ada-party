@@ -64,6 +64,16 @@
             <div id="curiosity-results" style="margin-top:20px;"></div>
         </div>
 
+    <div id="creativity-game" style="display:none;">
+        <div id="creativity-desc">
+            <b>Creativity Challenge:</b> List 7 examples in 20 seconds
+        </div>
+        <button id="creativity-start-btn" class="mini-game-btn" style="margin-top:20px;">Start</button>
+        <div id="creativity-topic" style="margin-top:20px; font-size:1.2em; font-weight:bold;"></div>
+        <div id="creativity-timer" style="margin-top:10px; font-size:1.5em; color:#b86bff;"></div>
+        <div id="creativity-end-msg" style="margin-top:20px; color:orange; font-weight:bold;"></div>
+    </div>
+
         <button class="mini-game-btn" id="show-another-btn" onclick="showRandomGame()">Show Another Mini-Game</button>
     </div>
 
@@ -71,12 +81,8 @@
     <script>
         const miniGames = [
             {
-                name: "Industry Project",
-                desc: "Quiz based on past projects. Right answer = bonus."
-            },
-            {
                 name: "Creativity",
-                desc: "List X examples in Y seconds. Win = +3 Health, +3 Education"
+                desc: "List 7 examples in 20 seconds. Win = +3 Health, +3 Education"
             },
             {
                 name: "Resilience",
@@ -155,7 +161,66 @@
 
         ];
 
-let curiosityLoaded = true;
+        let curiosityLoaded = true;
+
+        const creativityTopics = [
+            "Words that start with the letter S",
+            "Synonyms for “happy”",
+            "Things that rhyme with “cat”",
+            "Adjectives to describe food",
+            "Animals with 4 letters in their name",
+            "Things you find in a kitchen",
+            "Things that are round",
+            "Items you wear in winter",
+            "Things you can’t touch",
+            "Things that use electricity",
+            "Made-up superhero names",
+            "Fantasy creature names",
+            "Silly inventions",
+            "New flavors of ice cream",
+            "Titles of books that don’t exist",
+            "Characters from fairy tales",
+            "Video game genres",
+            "Movie villains",
+            "Things you'd find in a magic school",
+            "Board games",
+            "Uses for a paperclip (not holding paper)",
+            "Things that could fall from the sky (not rain)",
+            "Things that could be pets (real or imaginary)",
+            "Things you could turn into a vehicle",
+            "Foods that should never be mixed"
+        ];
+
+        function startCreativityGame() {
+            // Reset UI
+            document.getElementById('creativity-desc').style.display = "block";
+            document.getElementById('creativity-start-btn').style.display = "inline-block";
+            document.getElementById('creativity-topic').textContent = "";
+            document.getElementById('creativity-timer').textContent = "";
+            document.getElementById('creativity-end-msg').textContent = "";
+
+            document.getElementById('creativity-start-btn').onclick = function() {
+                // Hide start button and description
+                document.getElementById('creativity-start-btn').style.display = "none";
+                document.getElementById('creativity-desc').style.display = "none";
+                // Pick a random topic
+                const topic = creativityTopics[Math.floor(Math.random() * creativityTopics.length)];
+                document.getElementById('creativity-topic').textContent = topic;
+                // Start countdown
+                let timeLeft = 20;
+                document.getElementById('creativity-timer').textContent = `Time left: ${timeLeft}s`;
+                document.getElementById('creativity-end-msg').textContent = "";
+                const timer = setInterval(() => {
+                    timeLeft--;
+                    document.getElementById('creativity-timer').textContent = `Time left: ${timeLeft}s`;
+                    if (timeLeft <= 0) {
+                        clearInterval(timer);
+                        document.getElementById('creativity-timer').textContent = "";
+                        document.getElementById('creativity-end-msg').textContent = "⏰ Time's up!";
+                    }
+                }, 1000);
+            };
+        }
 
         function showRandomGame() {
             const idx = Math.floor(Math.random() * miniGames.length);
@@ -165,16 +230,24 @@ let curiosityLoaded = true;
             document.getElementById('rigour-game').style.display = (game.name === "Rigour") ? "block" : "none";
             document.getElementById('curiosity-game').style.display = (game.name === "Curiosity") ? "block" : "none";
             document.getElementById('show-another-btn').style.display = "block";
+            document.getElementById('creativity-game').style.display = (game.name === "Creativity") ? "block" : "none";
+
             if (game.name === "Rigour") {
                 startRigourGame();
                 document.getElementById('show-another-btn').style.display = "none";
             }
+
             if (game.name === "Curiosity") {
                 if (!curiosityLoaded) {
                     document.getElementById('curiosity-questions').innerHTML = "<div>Loading questions...</div>";
                     return;
                 }
                 startCuriosityGame();
+                document.getElementById('show-another-btn').style.display = "none";
+            }
+
+            if (game.name === "Creativity") {
+                startCreativityGame();
                 document.getElementById('show-another-btn').style.display = "none";
             }
         }
