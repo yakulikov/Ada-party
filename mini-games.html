@@ -39,11 +39,11 @@
 </head>
 <body>
     <nav class="navbar">
-        <a href="dices.html">Dices</a>
+        <a href="dices.html">Dice</a>
         <a href="player-stats.html">Player Stats</a>
         <a href="help.html">Help</a>
         <a href="mini-games.html">MiniGames</a>
-        <a href="chase-the-goose.html">Chase The Goose</a>
+        <a href="chase-the-goose.html">Goose Chase</a>
     </nav>
     <div class="mini-game-container">
         <div class="mini-game-title" id="game-title"></div>
@@ -82,7 +82,7 @@
         const miniGames = [
             {
                 name: "Creativity",
-                desc: "List 7 examples in 20 seconds. Win = +3 Health, +3 Education"
+                desc: "List 7 examples in 20 seconds. Win = +3 Health, +3 IQ"
             },
             {
                 name: "Resilience",
@@ -94,11 +94,11 @@
             },
             {
                 name: "Curiosity",
-                desc: "Quiz question. Right answer = +2 Education"
+                desc: "Quiz question. Right answer = +2 IQ"
             },
             {
                 name: "Rigour",
-                desc: "Secretly choose how far back to move (0+). Most moves = +2 Health, +3 Education. No square effects trigger during this move."
+                desc: "Secretly choose how far back to move (0+). Most moves = +2 Health, +3 IQ. No square effects trigger during this move."
             }
         ];
 
@@ -323,7 +323,7 @@
                     feedback += "</div><br>";
                 }
                 if (allCorrect) {
-                    feedback += `<div style="color:green;font-weight:bold;">Congratulations! All answers are correct! (+2 Education)</div>`;
+                    feedback += `<div style="color:green;font-weight:bold;">Congratulations! All answers are correct! (+2 IQ)</div>`;
                 } else {
                     feedback += `<div style="color:orange;">Try again next time!</div>`;
                 }
@@ -368,7 +368,7 @@
                 if (val === max) winners.push(rigourPlayers[idx]);
             });
             resultsHtml += "</ul>";
-            resultsHtml += `<b>${winners.join(" & ")} moved the furthest back!</b><br>They get +2 Health, +3 Education.`;
+            resultsHtml += `<b>${winners.join(" & ")} moved the furthest back!</b><br>They get +2 Health, +3 IQ.`;
             document.getElementById('rigour-results').innerHTML = resultsHtml;
             document.getElementById('show-another-btn').style.display = "block";
         }
