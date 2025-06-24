@@ -1,8 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <style>
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+        }
+    </style>
     <meta charset="UTF-8">
-    <title>Dices</title>
+    <title>Dice</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -10,10 +18,12 @@
         <a href="dices.html">Dices</a>
         <a href="player-stats.html">Player Stats</a>
         <a href="help.html">Help</a>
+        <a href="mini-games.html">MiniGames</a>
+        <a href="chase-the-goose.html">Chase The Goose</a>
     </nav>
     <div class="container">
-        <button id="rollDice1">Roll Standard Dice</button>
-        <button id="rollDice2">Roll Geo(0.25) Dice</button>
+        <button id="rollDice1">Roll Standard Die</button>
+        <button id="rollDice2">Roll Geo(0.25) Die</button>
         <div id="dice" class="dice">?</div>
     </div>
     <script>

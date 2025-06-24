@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Random Mini-Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .mini-game-container {
+            background: #fffbe7;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            padding: 24px 32px;
+            margin: 48px auto;
+            max-width: 600px;
+            text-align: center;
+        }
+        .mini-game-title {
+            color: #b86bff;
+            font-size: 2em;
+            margin-bottom: 12px;
+        }
+        .mini-game-desc {
+            font-size: 1.2em;
+        }
+        .mini-game-btn {
+            margin-top: 24px;
+            padding: 10px 24px;
+            font-size: 1em;
+            background: #b86bff;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .mini-game-btn:hover {
+            background: #a05be0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="dices.html">Dices</a>
+        <a href="player-stats.html">Player Stats</a>
+        <a href="help.html">Help</a>
+        <a href="mini-games.html">MiniGames</a>
+        <a href="chase-the-goose.html">Chase The Goose</a>
+    </nav>
+    <!-- ...existing code... -->
+    <div class="mini-game-container">
+        <div class="mini-game-title" id="game-title"></div>
+        <div class="mini-game-desc" id="game-desc"></div>
+        <div id="rigour-game" style="display:none;">
+            <div id="rigour-prompt"></div>
+            <input type="number" id="rigour-input" min="0" style="display:none;">
+            <button id="rigour-submit" class="mini-game-btn" style="display:none;">Submit</button>
+            <div id="rigour-error" style="color:red; margin-top:8px;"></div>
+            <div id="rigour-results" style="margin-top:20px;"></div>
+        </div>
+        <button class="mini-game-btn" id="show-another-btn" onclick="showRandomGame()">Show Another Mini-Game</button>
+    </div>
+    <script>
+        const miniGames = [
+            {
+                name: "Industry Project",
+                desc: "Quiz based on past projects. Right answer = bonus."
+            },
+            {
+                name: "Creativity",
+                desc: "List X examples in Y seconds. Win = +3 Health, +3 Education"
+            },
+            {
+                name: "Resilience",
+                desc: "Staring contest. Winner gets bragging rights (and maybe a bonus?)"
+            },
+            {
+                name: "Collaboration",
+                desc: "Spy-finding game (like “Find the Spy”/“Werewolf”)"
+            },
+            {
+                name: "Curiosity",
+                desc: "Quiz question. Right answer = +2 Education"
+            },
+            {
+                name: "Rigour",
+                desc: "Secretly choose how far back to move (0+). Most moves = +2 Health, +3 Education. No square effects trigger during this move."
+            }
+        ];
+
+        function showRandomGame() {
+            const idx = Math.floor(Math.random() * miniGames.length);
+            const game = miniGames[idx];
+            document.getElementById('game-title').textContent = game.name;
+            document.getElementById('game-desc').textContent = game.desc;
+            document.getElementById('rigour-game').style.display = (game.name === "Rigour") ? "block" : "none";
+            document.getElementById('show-another-btn').style.display = "block";
+            if (game.name === "Rigour") {
+                startRigourGame();
+                document.getElementById('show-another-btn').style.display = "none";
+            }
+        }
+
+        // Rigour mini-game logic
+        const rigourPlayers = ["Player 1", "Player 2", "Player 3", "Player 4"];
+        let rigourAnswers = [];
+        let rigourCurrent = 0;
+
+        function startRigourGame() {
+            rigourAnswers = [];
+            rigourCurrent = 0;
+            document.getElementById('rigour-results').innerHTML = "";
+            document.getElementById('rigour-error').textContent = "";
+            showRigourInput();
+        }
+
+        function showRigourInput() {
+            const prompt = document.getElementById('rigour-prompt');
+            const input = document.getElementById('rigour-input');
+            const submit = document.getElementById('rigour-submit');
+            prompt.textContent = `${rigourPlayers[rigourCurrent]}, enter how many moves back you want to go (0 or more):`;
+            input.value = "";
+            input.style.display = "inline-block";
+            submit.style.display = "inline-block";
+            input.focus();
+        }
+
+        document.getElementById('rigour-submit').onclick = function() {
+            const input = document.getElementById('rigour-input');
+            const error = document.getElementById('rigour-error');
+            let value = input.value.trim();
+            if (!/^\d+$/.test(value)) {
+                error.textContent = "Please enter a non-negative integer.";
+                return;
+            }
+            value = parseInt(value, 10);
+            if (value < 0) {
+                error.textContent = "Value cannot be negative.";
+                return;
+            }
+            error.textContent = "";
+            rigourAnswers.push(value);
+            rigourCurrent++;
+            if (rigourCurrent < rigourPlayers.length) {
+                showRigourInput();
+            } else {
+                showRigourResults();
+            }
+        };
+
+        function showRigourResults() {
+            const input = document.getElementById('rigour-input');
+            const submit = document.getElementById('rigour-submit');
+            input.style.display = "none";
+            submit.style.display = "none";
+            document.getElementById('rigour-prompt').textContent = "Results:";
+            let resultsHtml = "<ul>";
+            let max = Math.max(...rigourAnswers);
+            let winners = [];
+            rigourAnswers.forEach((val, idx) => {
+                resultsHtml += `<li>${rigourPlayers[idx]}: ${val} moves back</li>`;
+                if (val === max) winners.push(rigourPlayers[idx]);
+            });
+            resultsHtml += "</ul>";
+            resultsHtml += `<b>${winners.join(" & ")} moved the furthest back!</b><br>They get +2 Health, +3 Education.`;
+            document.getElementById('rigour-results').innerHTML = resultsHtml;
+            document.getElementById('show-another-btn').style.display = "block";
+        }
+
+        // Show a random mini-game on page load
+        showRandomGame();
+    </script>
+</body>
+</html>

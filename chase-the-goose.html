@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chase the Goose Mini-Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .mini-game-container {
+            background: #fffbe7;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            padding: 24px 32px;
+            margin: 48px auto;
+            max-width: 600px;
+            text-align: center;
+        }
+        .mini-game-title {
+            color: #b86bff;
+            font-size: 2em;
+            margin-bottom: 12px;
+        }
+        .mini-game-desc {
+            font-size: 1.2em;
+        }
+        .goose-img {
+            display: none;
+            margin-top: 24px;
+            max-width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .reveal-btn {
+            margin-top: 24px;
+            padding: 10px 24px;
+            font-size: 1em;
+            background: #b86bff;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .reveal-btn:hover {
+            background: #a05be0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="dices.html">Dices</a>
+        <a href="player-stats.html">Player Stats</a>
+        <a href="help.html">Help</a>
+        <a href="mini-games.html">Mini-Games</a>
+        <a href="chase-the-goose.html">Chase The Goose</a>
+    </nav>
+    <div class="mini-game-container">
+        <div class="mini-game-title">Chase the Goose</div>
+        <div class="mini-game-desc">
+            First to spot goose in an image gets 1 extra turn
+        </div>
+        <button class="reveal-btn" onclick="revealGoose()">Reveal Goose Image</button>
+        <img id="goose-img" class="goose-img" src="" alt="Goose Image">
+    </div>
+    <script>
+        function revealGoose() {
+            const images = ['goose1.jpg', 'goose2.jpg'];
+            const randomImg = images[Math.floor(Math.random() * images.length)];
+            const imgElem = document.getElementById('goose-img');
+            imgElem.src = randomImg;
+            imgElem.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
