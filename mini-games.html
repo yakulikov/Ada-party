@@ -250,6 +250,11 @@
                 startCreativityGame();
                 document.getElementById('show-another-btn').style.display = "none";
             }
+
+             if (game.name === "Collaboration") {
+                startCollaborationGame();
+                document.getElementById('show-another-btn').style.display = "none";
+            }
         }
 
 
@@ -367,6 +372,87 @@
             document.getElementById('rigour-results').innerHTML = resultsHtml;
             document.getElementById('show-another-btn').style.display = "block";
         }
+
+              function startCollaborationGame() {
+
+            const spyGameWords = {
+  places: ["Airport","School","Bank","Hospital","Library","Restaurant","Park","Office","Beach","Cinema"],
+  professions: ["Doctor","Teacher","Chef","Pilot","Actor","Police","Artist","Nurse","Farmer"],
+  animals: ["Dog","Cat","Tiger","Eagle","Fish","Horse","Bear","Snake","Rabbit","Owl"
+  ]
+};
+
+    if(Math.floor(Math.random() * 3) == 1){
+            var chosenTheme = "places";
+            var chosenWord = spyGameWords.places[Math.floor(Math.random() * spyGameWords.places.length)];
+            }
+        else if([Math.floor(Math.random() * 3)] == 2){
+            var chosenTheme = "professions";
+            var chosenWord = spyGameWords.professions[Math.floor(Math.random() * spyGameWords.professions.length)];
+            }
+        else {
+            var chosenTheme = "animals";
+            var chosenWord = spyGameWords.animals[Math.floor(Math.random() * spyGameWords.animals.length)];
+            }
+
+    // Setup players
+    const players = ["Player 1", "Player 2", "Player 3", "Player 4"];
+    // Randomly pick the spy (1-4)
+    const spyIndex = Math.floor(Math.random() * 4);
+    let currentPlayer = 0;
+
+    // Create or select a container for the game
+    let collabDiv = document.getElementById('collaboration-game');
+    if (!collabDiv) {
+        collabDiv = document.createElement('div');
+        collabDiv.id = 'collaboration-game';
+        collabDiv.style.marginTop = "24px";
+        document.querySelector('.mini-game-container').appendChild(collabDiv);
+    }
+    collabDiv.innerHTML = `
+        <div id="collab-message" style="font-size:1.2em;margin-bottom:18px;"></div>
+        <button id="collab-reveal-btn" class="mini-game-btn">Reveal Role</button>
+        <button id="collab-next-btn" class="mini-game-btn" style="display:none;">Continue</button>
+    `;
+
+    const messageDiv = document.getElementById('collab-message');
+    const revealBtn = document.getElementById('collab-reveal-btn');
+    const nextBtn = document.getElementById('collab-next-btn');
+
+    function showPrompt() {
+        messageDiv.textContent = `${players[currentPlayer]}, press "Reveal Role" to see your role.`;
+        revealBtn.style.display = "inline-block";
+        nextBtn.style.display = "none";
+    }
+
+    function revealRole() {
+        if (currentPlayer === spyIndex) {
+            messageDiv.textContent = "You are the SPY! 🤫";
+        } else {
+            messageDiv.textContent = `You are a regular player! Your word is: ${chosenWord}`;
+        }
+        revealBtn.style.display = "none";
+        nextBtn.style.display = "inline-block";
+    }
+
+    function nextPlayer() {
+        currentPlayer++;
+        if (currentPlayer < players.length) {
+            messageDiv.textContent = "Pass the device to the next player.";
+            setTimeout(showPrompt, 1200);
+        } else {
+            messageDiv.textContent = "The theme is " + chosenTheme + ". All roles revealed! Start the discussion.";
+            revealBtn.style.display = "none";
+            nextBtn.style.display = "none";
+            document.getElementById('show-another-btn').style.display = "block";
+        }
+    }
+
+    revealBtn.onclick = revealRole;
+    nextBtn.onclick = nextPlayer;
+
+    showPrompt();
+              }
 
         // Show a random mini-game on page load
         showRandomGame();
