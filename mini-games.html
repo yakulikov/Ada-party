@@ -86,7 +86,7 @@
             },
             {
                 name: "Resilience",
-                desc: "Staring contest. Winner gets +2 IQ points"
+                desc: "Staring contest. Winner gets bragging rights (and maybe a bonus?)"
             },
             {
                 name: "Collaboration",
@@ -223,39 +223,70 @@
         }
 
         function showRandomGame() {
-            const idx = Math.floor(Math.random() * miniGames.length);
-            const game = miniGames[idx];
-            document.getElementById('game-title').textContent = game.name;
-            document.getElementById('game-desc').textContent = game.desc;
-            document.getElementById('rigour-game').style.display = (game.name === "Rigour") ? "block" : "none";
-            document.getElementById('curiosity-game').style.display = (game.name === "Curiosity") ? "block" : "none";
-            document.getElementById('show-another-btn').style.display = "block";
-            document.getElementById('creativity-game').style.display = (game.name === "Creativity") ? "block" : "none";
+    // Disable the button during animation
+    const btn = document.getElementById('show-another-btn');
+    btn.disabled = true;
 
-            if (game.name === "Rigour") {
+    // Hide all mini-game sections
+    document.getElementById('rigour-game').style.display = "none";
+    document.getElementById('curiosity-game').style.display = "none";
+    document.getElementById('creativity-game').style.display = "none";
+    // Hide collaboration game if present
+    const collabDiv = document.getElementById('collaboration-game');
+    if (collabDiv) collabDiv.style.display = "none";
+
+    // Animation variables
+    const flashes = 10; // how many names to flash
+    const flashInterval = 100; // ms between flashes
+    let count = 0;
+
+    let flashTimer = setInterval(() => {
+        // Pick a random mini-game to display
+        const idx = Math.floor(Math.random() * miniGames.length);
+        const game = miniGames[idx];
+        document.getElementById('game-title').textContent = game.name;
+        document.getElementById('game-desc').textContent = game.desc;
+        count++;
+        if (count >= flashes) {
+            clearInterval(flashTimer);
+
+            // Pick the final game
+            const finalIdx = Math.floor(Math.random() * miniGames.length);
+            const finalGame = miniGames[finalIdx];
+            document.getElementById('game-title').textContent = finalGame.name;
+            document.getElementById('game-desc').textContent = finalGame.desc;
+
+            // Show relevant section
+            document.getElementById('rigour-game').style.display = (finalGame.name === "Rigour") ? "block" : "none";
+            document.getElementById('curiosity-game').style.display = (finalGame.name === "Curiosity") ? "block" : "none";
+            document.getElementById('creativity-game').style.display = (finalGame.name === "Creativity") ? "block" : "none";
+            if (collabDiv) collabDiv.style.display = (finalGame.name === "Collaboration") ? "block" : "none";
+
+            // Start the correct game logic
+            if (finalGame.name === "Rigour") {
                 startRigourGame();
-                document.getElementById('show-another-btn').style.display = "none";
-            }
-
-            if (game.name === "Curiosity") {
+                btn.style.display = "none";
+            } else if (finalGame.name === "Curiosity") {
                 if (!curiosityLoaded) {
                     document.getElementById('curiosity-questions').innerHTML = "<div>Loading questions...</div>";
                     return;
                 }
                 startCuriosityGame();
-                document.getElementById('show-another-btn').style.display = "none";
-            }
-
-            if (game.name === "Creativity") {
+                btn.style.display = "none";
+            } else if (finalGame.name === "Creativity") {
                 startCreativityGame();
-                document.getElementById('show-another-btn').style.display = "none";
+                btn.style.display = "none";
+            } else if (finalGame.name === "Collaboration") {
+                startCollaborationGame();
+                btn.style.display = "none";
+            } else {
+                btn.style.display = "block";
             }
 
-             if (game.name === "Collaboration") {
-                startCollaborationGame();
-                document.getElementById('show-another-btn').style.display = "none";
-            }
+            btn.disabled = false;
         }
+    }, flashInterval);
+}
 
 
         // Rigour mini-game logic
