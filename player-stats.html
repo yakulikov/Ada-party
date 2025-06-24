@@ -39,7 +39,7 @@
                     <th>    </th>
                     <th>Health</th>
                     <th>    </th>
-                    <th>Education</th>
+                    <th>IQ</th>
                 </tr>
             </thead>
             <tbody>
@@ -124,7 +124,7 @@ function saveStats(stats) {
 function updateUI(stats) {
     for (let player = 1; player <= 4; player++) {
         document.getElementById(`health-${player}`).textContent = stats[player].health;
-        document.getElementById(`IQ-${player}`).textContent = stats[player].education;
+        document.getElementById(`education-${player}`).textContent = stats[player].education;
     }
 }
 
