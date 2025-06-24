@@ -107,17 +107,42 @@
         </table>
     </div>
     <script>
-    document.querySelectorAll('.plus, .minus').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const player = this.getAttribute('data-player');
-            const stat = this.getAttribute('data-stat');
-            const span = document.getElementById(`${stat}-${player}`);
-            let value = parseInt(span.textContent, 10);
-            if (this.classList.contains('plus')) value++;
-            else if (this.classList.contains('minus') && value>0) value--;
-            span.textContent = value;
-        });
+// Helper to get or set player stats in localStorage
+function getStats() {
+    return JSON.parse(localStorage.getItem('playerStats')) || {
+        1: { health: 5, education: 0 },
+        2: { health: 5, education: 0 },
+        3: { health: 5, education: 0 },
+        4: { health: 5, education: 0 }
+    };
+}
+function saveStats(stats) {
+    localStorage.setItem('playerStats', JSON.stringify(stats));
+}
+
+// Initialize values from localStorage
+function updateUI(stats) {
+    for (let player = 1; player <= 4; player++) {
+        document.getElementById(`health-${player}`).textContent = stats[player].health;
+        document.getElementById(`education-${player}`).textContent = stats[player].education;
+    }
+}
+
+let stats = getStats();
+updateUI(stats);
+
+document.querySelectorAll('.plus, .minus').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const player = this.getAttribute('data-player');
+        const stat = this.getAttribute('data-stat');
+        let value = stats[player][stat];
+        if (this.classList.contains('plus')) value++;
+        else if (this.classList.contains('minus') && value > 0) value--;
+        stats[player][stat] = value;
+        document.getElementById(`${stat}-${player}`).textContent = value;
+        saveStats(stats);
     });
-    </script>
+});
+</script>
 </body>
 </html>
